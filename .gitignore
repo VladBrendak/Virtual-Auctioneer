@@ -1,0 +1,20 @@
+# Gradle generated files
+bin/
+gen/
+
+# Local configuration file used for proj. specific settings (sdk paths, etc)
+local.properties
+
+# Ignore Intellij project files and idea directory
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Gradle related files and caches
+.gradletasknamecache
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+build/
