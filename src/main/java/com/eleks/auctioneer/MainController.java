@@ -1,4 +1,4 @@
-package org.example;
+package com.eleks.auctioneer;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
