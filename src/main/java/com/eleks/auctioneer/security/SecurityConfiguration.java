@@ -1,10 +1,12 @@
 package com.eleks.auctioneer.security;
-import com.eleks.auctioneer.service.AppUserService;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,15 +41,14 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http
-                .cors().disable()
-                .csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/other").permitAll()
-                .and()
-                .authorizeHttpRequests().requestMatchers("/**")
-                .authenticated().and().formLogin();
+                .cors(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/other").permitAll())
+
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**").authenticated());
 
         return http.build();
     }
