@@ -13,8 +13,8 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "User")
-public class User implements UserDetails {
+@Table(name = "app_users")
+public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
 
-    public User(User userInfo) {
+    public AppUser(AppUser userInfo) {
         this.nickname = userInfo.getNickname();
         this.email = userInfo.getEmail();
         this.password = userInfo.getPassword();

@@ -1,10 +1,10 @@
 package com.eleks.auctioneer.repository;
 
-import com.eleks.auctioneer.entity.User;
+import com.eleks.auctioneer.entity.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserInfoRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByNickname(String username);
+public interface UserInfoRepository extends JpaRepository<AppUser, Integer> {
+    Optional<AppUser> findByNickname(String username);
 }

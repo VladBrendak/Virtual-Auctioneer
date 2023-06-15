@@ -1,6 +1,6 @@
 package com.eleks.auctioneer.service;
 
-import com.eleks.auctioneer.entity.User;
+import com.eleks.auctioneer.entity.AppUser;
 import com.eleks.auctioneer.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,8 +18,8 @@ public class UserInfoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userInfo = userInfoRepository.findByNickname(username);
-        return userInfo.map(User::new)
+        Optional<AppUser> userInfo = userInfoRepository.findByNickname(username);
+        return userInfo.map(AppUser::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User \"" + username + "\" not found!"));
     }
 }

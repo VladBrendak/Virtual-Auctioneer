@@ -1,6 +1,6 @@
 package com.eleks.auctioneer.service;
 
-import com.eleks.auctioneer.entity.User;
+import com.eleks.auctioneer.entity.AppUser;
 import com.eleks.auctioneer.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String addUser(User userInfo) {
+    public String addUser(AppUser userInfo) {
         userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
         userInfoRepository.save(userInfo);
         return "User added to system";
