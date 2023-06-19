@@ -7,3 +7,8 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     url: ${DB_URL}
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
