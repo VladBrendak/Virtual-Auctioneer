@@ -1,5 +1,6 @@
 package com.eleks.auctioneer.entity;
 
+import com.eleks.auctioneer.DTO.AppUserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -62,5 +63,10 @@ public class AppUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public static AppUserDTO mapToDto(AppUser user)
+    {
+        return new AppUserDTO(user.getId(), user.getNickname(), user.getEmail(), user.getPassword());
     }
 }

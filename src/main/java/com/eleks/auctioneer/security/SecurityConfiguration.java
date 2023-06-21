@@ -47,11 +47,11 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/", "/user/new").permitAll()
                 )
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/other").authenticated()
-//                )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/other").authenticated()
+                )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll
                 );
 
