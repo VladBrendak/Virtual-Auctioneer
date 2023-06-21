@@ -1,13 +1,7 @@
 package com.eleks.auctioneer.DTO;
 
 import com.eleks.auctioneer.entity.AppUser;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppUserDTO {
-    @Id
+
     private Long id;
     @NotBlank(message = "Nickname is mandatory")
     private String nickname;
@@ -25,12 +19,12 @@ public class AppUserDTO {
     private String email;
     @NotEmpty
     @NotBlank(message = "Password is mandatory")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',.?/*~$^+=<>]).{8,20}$")
     private String password;
 
     public static AppUser mapToUser(AppUserDTO userDTO)
     {
         AppUser user = new AppUser();
-        user.setId(userDTO.getId());
         user.setNickname(userDTO.getNickname());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
