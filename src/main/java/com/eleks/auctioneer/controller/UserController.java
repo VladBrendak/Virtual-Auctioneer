@@ -20,8 +20,8 @@ public class UserController {
     }
 
     @GetMapping("/getAll")
-    public String getAllUsers()
+    public List<AppUserDTO> getAllUsers()
     {
-        return userService.getAllUsers().toString();
+        return userService.getAllUsers();
     }
 }
