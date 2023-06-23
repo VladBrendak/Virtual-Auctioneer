@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Data
 @AllArgsConstructor
@@ -24,12 +25,12 @@ public class AppUserDTO {
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',.?/*~$^+=<>]).{6,20}$")
     private String password;
 
-    public static AppUser mapToUser(AppUserDTO userDTO)
+    public static AppUser mapToUser(AppUserDTO userDTO, PasswordEncoder passwordEncoder)
     {
         AppUser user = new AppUser();
         user.setNickname(userDTO.getNickname());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         return user;
     }
 

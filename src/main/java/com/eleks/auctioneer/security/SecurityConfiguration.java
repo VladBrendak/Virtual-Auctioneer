@@ -1,6 +1,6 @@
 package com.eleks.auctioneer.security;
 
-import com.eleks.auctioneer.service.UserInfoUserDetailsService;
+import com.eleks.auctioneer.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -21,23 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    /*
-     * Hardcode first user to check if security works
-     */
-//    @Bean
-//    public UserDetailsService userDetailsService(PasswordEncoder encoder){
-//        UserDetails user = User
-//                .withUsername("Vlad")
-//                .password(encoder.encode("1234"))
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
-
-
     @Bean
     public UserDetailsService userDetailsService(){
-        return new UserInfoUserDetailsService();
+        return new UserService();
     }
 
     @Bean
@@ -46,13 +32,7 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
-                )
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/other").authenticated()
-//                )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll
-                );
+                        .requestMatchers("/user/posts").permitAll());
 
         return http.build();
     }

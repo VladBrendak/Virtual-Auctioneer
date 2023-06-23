@@ -14,12 +14,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/new")
+    @PostMapping("/posts")
     public String addNewUser(@Validated @RequestBody AppUserDTO userInfoDTO) {
         return userService.addUser(userInfoDTO);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/posts")
     public List<AppUserDTO> getAllUsers()
     {
         return userService.getAllUsers();
