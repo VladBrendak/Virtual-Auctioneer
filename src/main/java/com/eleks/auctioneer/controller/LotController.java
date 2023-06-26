@@ -21,17 +21,6 @@ public class LotController {
     @Autowired
     private LotService lotService;
 
-//    @PostMapping("/posts")
-//    public String addNewLot(@Validated @RequestBody LotDTO lotDTO) {
-//        return lotService.addLot(lotDTO);
-//    }
-//
-//    @GetMapping("/posts")
-//    public List<LotDTO> getAllLot()
-//    {
-//        return lotService.getAllLot();
-//    }
-
     @PostMapping("/addlots")
     public ResponseEntity<String> uploadLot(@RequestParam LotDTO lotDTO,
                                             @RequestParam("file") MultipartFile file,
