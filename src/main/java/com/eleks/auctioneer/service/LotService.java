@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,5 +40,11 @@ public class LotService {
 
         return fileName;
     }
+
+    public List<LotDTO> getAllActiveLots()
+    {
+        return lotRepository.findAllActiveLots().stream().map(Lot::mapToLotDTO).toList();
+    }
+
 
 }

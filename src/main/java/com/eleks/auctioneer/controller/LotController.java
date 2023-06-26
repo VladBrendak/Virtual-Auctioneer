@@ -28,6 +28,10 @@ public class LotController {
         return lotService.uploadLot(lotDTO, file, previewImage);
     }
 
-
+    @GetMapping("/getActive")
+    public List<LotDTO> getActiveLots()
+    {
+        return lotService.getAllActiveLots();
+    }
 
 }
