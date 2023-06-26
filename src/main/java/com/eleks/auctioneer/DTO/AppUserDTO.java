@@ -11,24 +11,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppUserDTO {
-    private Long id_user;
+    private Long id;
     @NotBlank(message = "Nickname is mandatory")
     @Pattern(regexp = "^[a-zA-Z]+$")
-    private String login;
+    private String username;
     @Email(message = "Typo in email address")
     @NotBlank(message = "Email address is mandatory")
     private String email;
     @NotEmpty
     @NotBlank(message = "Password is mandatory")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',.?/*~$^+=<>]).{6,19}$")
-    private String user_password;
+    private String password;
 
     public static AppUser mapToUser(AppUserDTO userDTO, PasswordEncoder passwordEncoder)
     {
         AppUser user = new AppUser();
-        user.setLogin(userDTO.getLogin());
+        user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
-        user.setUser_password(passwordEncoder.encode(userDTO.getUser_password()));
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         return user;
     }
 

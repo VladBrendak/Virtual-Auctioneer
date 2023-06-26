@@ -18,16 +18,19 @@ import java.util.Collection;
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_user;
-    private String login;
-    @Column(unique=true)
+    @Column(name = "id_user")
+    private Long id;
+    @Column(name = "login")
+    private String username;
+    @Column(name = "email", unique=true)
     private String email;
-    private String user_password;
+    @Column(name = "user_password")
+    private String password;
 
     public AppUser(AppUser userInfo) {
-        this.login = userInfo.getLogin();
+        this.username = userInfo.getUsername();
         this.email = userInfo.getEmail();
-        this.user_password = userInfo.getPassword();
+        this.password = userInfo.getPassword();
     }
 
     @Override
@@ -38,12 +41,12 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return username;
     }
 
     @Override
     public String getPassword() {
-        return user_password;
+        return password;
     }
 
     @Override
@@ -68,6 +71,6 @@ public class AppUser implements UserDetails {
 
     public static AppUserDTO mapToDto(AppUser user)
     {
-        return new AppUserDTO(user.getId_user(), user.getLogin(), user.getEmail(), user.getPassword());
+        return new AppUserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
     }
 }
