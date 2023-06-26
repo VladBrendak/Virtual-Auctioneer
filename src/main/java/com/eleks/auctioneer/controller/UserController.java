@@ -3,6 +3,7 @@ package com.eleks.auctioneer.controller;
 import com.eleks.auctioneer.DTO.AppUserDTO;
 import com.eleks.auctioneer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/posts")
-    public String addNewUser(@Validated @RequestBody AppUserDTO userInfoDTO) {
+    public ResponseEntity<String> addNewUser(@Validated @RequestBody AppUserDTO userInfoDTO) {
         return userService.addUser(userInfoDTO);
     }
 

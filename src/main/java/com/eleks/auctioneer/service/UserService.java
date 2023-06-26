@@ -4,6 +4,8 @@ import com.eleks.auctioneer.DTO.AppUserDTO;
 import com.eleks.auctioneer.entity.AppUser;
 import com.eleks.auctioneer.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,13 +29,13 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User email: \"" + email + "\" not found!"));
     }
 
-    public String addUser(AppUserDTO userInfoDTO) {
+    public ResponseEntity<String> addUser(AppUserDTO userInfoDTO) {
         if(userInfoRepository.findByEmail(userInfoDTO.getEmail()).isEmpty())
         {
             userInfoRepository.save(AppUserDTO.mapToUser(userInfoDTO, passwordEncoder));
-            return "User added to system";
+            return new ResponseEntity<String>("User added to system", HttpStatus.OK);
         }
-        return "Email already used!!!";
+        return new ResponseEntity<String>("Email already used!!!", HttpStatus.BAD_REQUEST);
     }
 
     public List<AppUserDTO> getAllUsers()
