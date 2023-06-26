@@ -1,12 +1,12 @@
 package com.eleks.auctioneer.controller;
 
-import com.eleks.auctioneer.entity.AppUser;
+import com.eleks.auctioneer.DTO.AppUserDTO;
 import com.eleks.auctioneer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -14,8 +14,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/new")
-    public String addNewUser(@RequestBody AppUser userInfo) {
-        return userService.addUser(userInfo);
+    @PostMapping("/posts")
+    public String addNewUser(@Validated @RequestBody AppUserDTO userInfoDTO) {
+        return userService.addUser(userInfoDTO);
+    }
+
+    @GetMapping("/posts")
+    public List<AppUserDTO> getAllUsers()
+    {
+        return userService.getAllUsers();
     }
 }

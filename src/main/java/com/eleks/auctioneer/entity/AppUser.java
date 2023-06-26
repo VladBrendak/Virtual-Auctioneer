@@ -1,5 +1,6 @@
 package com.eleks.auctioneer.entity;
 
+import com.eleks.auctioneer.DTO.AppUserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,19 +14,20 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "app_users")
+@Table(name = "users")
 public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nickname;
+    private Long id_user;
+    private String login;
+    @Column(unique=true)
     private String email;
-    private String password;
+    private String user_password;
 
     public AppUser(AppUser userInfo) {
-        this.nickname = userInfo.getNickname();
+        this.login = userInfo.getLogin();
         this.email = userInfo.getEmail();
-        this.password = userInfo.getPassword();
+        this.user_password = userInfo.getPassword();
     }
 
     @Override
@@ -36,12 +38,12 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nickname;
+        return login;
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user_password;
     }
 
     @Override
@@ -62,5 +64,10 @@ public class AppUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public static AppUserDTO mapToDto(AppUser user)
+    {
+        return new AppUserDTO(user.getId_user(), user.getLogin(), user.getEmail(), user.getPassword());
     }
 }
