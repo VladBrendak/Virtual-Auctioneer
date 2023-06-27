@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/posts").permitAll());
+                        .requestMatchers("/users").permitAll());
 
         return http.build();
     }
