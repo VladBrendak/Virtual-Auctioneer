@@ -22,7 +22,7 @@ public class FileController {
     @RequestMapping(value = "/files/{fileReference}", method = RequestMethod.GET)
     public ResponseEntity<StreamingResponseBody> getStreamingFile(@PathVariable("fileReference") String fileReference, HttpServletResponse response) {
         try {
-            Path folderPath = Paths.get("D:\\КН-319\\PracticeJava\\files");
+            Path folderPath = Paths.get(System.getenv("FILE_PATH"));
             if (!Files.exists(folderPath)) {
                 return ResponseEntity.notFound().build();
             }
