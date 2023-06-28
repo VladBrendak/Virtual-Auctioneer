@@ -17,9 +17,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/lots")
 public class FileController {
-    @RequestMapping(value = "/download/{fileReference}", method = RequestMethod.GET)
+    @RequestMapping(value = "/files/{fileReference}", method = RequestMethod.GET)
     public ResponseEntity<StreamingResponseBody> getStreamingFile(@PathVariable("fileReference") String fileReference, HttpServletResponse response) {
         try {
             Path folderPath = Paths.get("D:\\КН-319\\PracticeJava\\files");
