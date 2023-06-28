@@ -1,6 +1,7 @@
 package com.eleks.auctioneer.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +20,13 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/lots")
 public class FileController {
+    @Value("${spring.storage.file-path}")
+    private String filePath;
+
     @RequestMapping(value = "/files/{fileReference}", method = RequestMethod.GET)
     public ResponseEntity<StreamingResponseBody> getStreamingFile(@PathVariable("fileReference") String fileReference, HttpServletResponse response) {
         try {
-            Path folderPath = Paths.get(System.getenv("FILE_PATH"));
+            Path folderPath = Paths.get(filePath);
             if (!Files.exists(folderPath)) {
                 return ResponseEntity.notFound().build();
             }
