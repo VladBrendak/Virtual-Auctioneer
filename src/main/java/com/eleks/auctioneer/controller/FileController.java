@@ -10,29 +10,62 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
+@RequestMapping("/files")
 public class FileController {
-    @RequestMapping(value = "files/{fileReference}", method = RequestMethod.GET)
+    @RequestMapping(value = "/download/{fileReference}", method = RequestMethod.GET)
     public ResponseEntity<StreamingResponseBody> getStreamingFile(@PathVariable("fileReference") String fileReference, HttpServletResponse response) {
         try {
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment; filename=\"demo.pdf\"");
-            InputStream inputStream = new FileInputStream(new File("D:\\КН-319\\PracticeJava\\" + fileReference + ".pdf"));
+            Path folderPath = Paths.get("D:\\КН-319\\PracticeJava\\files");
+            if (!Files.exists(folderPath)) {
+                return ResponseEntity.notFound().build();
+            }
 
-            StreamingResponseBody responseBody = outputStream -> {
-                int nRead;
-                byte[] data = new byte[1024];
-                while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
-                    System.out.println("Writing some bytes..");
-                    outputStream.write(data, 0, nRead);
+            String fileExtension = "";
+            try (Stream<Path> paths = Files.walk(folderPath)) {
+                Optional<Path> optionalFilePath = paths
+                        .filter(Files::isRegularFile)
+                        .filter(path -> path.getFileName().toString().startsWith(fileReference))
+                        .findFirst();
+                if (optionalFilePath.isPresent()) {
+                    Path filePath = optionalFilePath.get();
+                    fileExtension = getFileExtension(filePath);
+
+                    String mimeType = Files.probeContentType(filePath);
+                    response.setContentType(mimeType);
+                    response.setHeader("Content-Disposition", "attachment; filename=\"demo" + fileExtension + "\"");
+
+                    InputStream inputStream = Files.newInputStream(filePath);
+
+                    StreamingResponseBody responseBody = outputStream -> {
+                        int nRead;
+                        byte[] data = new byte[1024];
+                        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+                            System.out.println("Writing some bytes..");
+                            outputStream.write(data, 0, nRead);
+                        }
+                    };
+
+                    return ResponseEntity.ok(responseBody);
                 }
-            };
+            }
 
-            return ResponseEntity.ok(responseBody);
-        } catch (FileNotFoundException e) {
             return ResponseEntity.notFound().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    private String getFileExtension(Path filePath) {
+        String fileName = filePath.getFileName().toString();
+        int dotIndex = fileName.lastIndexOf(".");
+        return dotIndex == -1 ? "" : fileName.substring(dotIndex);
     }
 
 }
