@@ -68,9 +68,4 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    public static AppUserDTO mapToDto(AppUser user)
-    {
-        return new AppUserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getPassword());
-    }
 }
