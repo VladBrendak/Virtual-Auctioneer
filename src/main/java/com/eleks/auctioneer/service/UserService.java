@@ -37,10 +37,4 @@ public class UserService implements UserDetailsService {
         }
         return new ResponseEntity<String>("Email already used!!!", HttpStatus.BAD_REQUEST);
     }
-
-    public List<AppUserDTO> getAllUsers()
-    {
-        return userInfoRepository.findAll().stream().map(AppUser::mapToDto).toList();
-    }
-
 }

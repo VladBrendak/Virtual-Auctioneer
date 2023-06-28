@@ -19,10 +19,4 @@ public class UserController {
     public ResponseEntity<String> addNewUser(@Validated @RequestBody AppUserDTO userInfoDTO) {
         return userService.addUser(userInfoDTO);
     }
-
-    @GetMapping
-    public List<AppUserDTO> getAllUsers()
-    {
-        return userService.getAllUsers();
-    }
 }
