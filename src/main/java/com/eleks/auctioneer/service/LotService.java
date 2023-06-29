@@ -25,14 +25,14 @@ public class LotService {
     @Autowired
     private LotRepository lotRepository;
 
-    public ResponseEntity<String> uploadLot(LotDTO lotDTO, MultipartFile file, MultipartFile Image) {
+    public ResponseEntity<String> uploadLot(LotDTO lotDTO, MultipartFile file, MultipartFile previewImage) throws IOException {
 
-        if (lotDTO.getName_of_lot() == null || file.isEmpty() || Image.isEmpty()) {
+        if (lotDTO.getName_of_lot() == null || file.isEmpty() || previewImage.isEmpty()) {
             return ResponseEntity.badRequest().body("Lot name, file, and preview image are mandatory.");
         }
 
         String assetFileName = saveFile(file, filePath);
-        String previewImageName = saveFile(Image, imagePath);
+        String previewImageName = saveFile(previewImage, imagePath);
 
         Lot lot = LotDTO.mapToLot(lotDTO);
         lot.setAsset_file(assetFileName);
@@ -42,8 +42,8 @@ public class LotService {
 
         return ResponseEntity.ok("Lot submitted successfully.");
     }
-    private String saveFile(MultipartFile file, String storagePath) {
 
+    private String saveFile(MultipartFile file, String storagePath) throws IOException {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
         String filePath = storagePath + "/" + fileName;
 
@@ -55,7 +55,6 @@ public class LotService {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-
         return fileName;
     }
 
@@ -63,6 +62,4 @@ public class LotService {
     {
         return lotRepository.findAllActiveLots().stream().map(Lot::mapToLotDTO).toList();
     }
-
-
 }

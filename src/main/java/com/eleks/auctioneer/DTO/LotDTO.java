@@ -23,8 +23,6 @@ public class LotDTO {
     @Pattern(regexp = "^[a-zA-Z]+$")
     private String name_of_lot;
     @NotEmpty
-    private String image;
-    @NotEmpty
     private String author;
     @NotEmpty
     private String category;
@@ -32,19 +30,16 @@ public class LotDTO {
     private String description;
     @NotEmpty
     private Timestamp expiration;
-    @NotEmpty
-    private String asset_file;
+
 
     public static Lot mapToLot(LotDTO lotdto){
         Lot lot = new Lot();
         lot.setId_lot(lotdto.getId_lot());
         lot.setName_of_lot(lotdto.getName_of_lot());
-        lot.setImage(lotdto.getImage());
         lot.setAuthor(lotdto.getAuthor());
         lot.setCategory(lotdto.getCategory());
         lot.setDescription(lotdto.getDescription());
         lot.setExpiration(lotdto.getExpiration());
-        lot.setAsset_file(lotdto.getAsset_file());
 
         return lot;
     }
