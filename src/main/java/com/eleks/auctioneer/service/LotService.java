@@ -16,10 +16,10 @@ import java.util.UUID;
 
 @Service
 public class LotService {
-    @Value("spring.storage.file-path")
+    @Value("${spring.storage.file-path}")
     private String filePath;
 
-    @Value("spring.storage.image-path")
+    @Value("${spring.storage.image-path}")
     private String imagePath;
 
     @Autowired
