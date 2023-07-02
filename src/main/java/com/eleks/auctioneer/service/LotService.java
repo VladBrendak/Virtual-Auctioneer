@@ -16,21 +16,16 @@ import java.util.UUID;
 
 @Service
 public class LotService {
-    @Value("${spring.storage.file-path}")
+    @Value("${auctioneer.app.storage.file-path}")
     private String filePath;
 
-    @Value("${spring.storage.image-path}")
+    @Value("${auctioneer.app.storage.image-path}")
     private String imagePath;
 
     @Autowired
     private LotRepository lotRepository;
 
     public ResponseEntity<String> uploadLot(LotDTO lotDTO, MultipartFile file, MultipartFile previewImage) throws IOException {
-
-        if (lotDTO.getName_of_lot() == null || file.isEmpty() || previewImage.isEmpty()) {
-            return ResponseEntity.badRequest().body("Lot name, file, and preview image are mandatory.");
-        }
-
         String assetFileName = saveFile(file, filePath);
         String previewImageName = saveFile(previewImage, imagePath);
 

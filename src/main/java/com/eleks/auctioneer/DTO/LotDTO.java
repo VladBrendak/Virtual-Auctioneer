@@ -22,7 +22,6 @@ public class LotDTO {
     @NotBlank(message = "Name of lot is mandatory")
     @Pattern(regexp = "^[a-zA-Z]+$")
     private String name_of_lot;
-    @NotEmpty
     private String author;
     @NotEmpty
     private String category;

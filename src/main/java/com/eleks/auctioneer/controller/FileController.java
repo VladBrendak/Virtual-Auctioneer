@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/lots")
 public class FileController {
-    @Value("${spring.storage.file-path}")
+    @Value("${auctioneer.app.storage.file-path}")
     private String filePath;
 
     @RequestMapping(value = "/files/{fileReference}", method = RequestMethod.GET)

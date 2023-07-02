@@ -13,6 +13,8 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/migration
 
-  storage:
-    image-path: ${IMAGE_PATH}
-    file-path:  ${FILE_PATH}
+auctioneer:
+  app:
+    storage:
+      image-path: ${IMAGE_PATH}
+      file-path:  ${FILE_PATH}
