@@ -24,6 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
+    @RequestMapping(value = "/username", method = RequestMethod.GET)
+    @ResponseBody
+    public String currentUserName(Authentication authentication) {
+        return authentication.getName();
+    }
+
     @Bean
     public UserDetailsService userDetailsService(){
         return new UserService();
