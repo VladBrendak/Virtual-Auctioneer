@@ -25,13 +25,14 @@ public class LotService {
     @Autowired
     private LotRepository lotRepository;
 
-    public ResponseEntity<String> uploadLot(LotDTO lotDTO, MultipartFile file, MultipartFile previewImage) throws IOException {
+    public ResponseEntity<String> uploadLot(LotDTO lotDTO, MultipartFile file, MultipartFile previewImage, String curentUserName) throws IOException {
         String assetFileName = saveFile(file, filePath);
         String previewImageName = saveFile(previewImage, imagePath);
 
         Lot lot = LotDTO.mapToLot(lotDTO);
         lot.setAsset_file(assetFileName);
         lot.setImage(previewImageName);
+        lot.setAuthor(curentUserName);
 
         lotRepository.save(lot);
 

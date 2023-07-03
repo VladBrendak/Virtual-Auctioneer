@@ -1,6 +1,5 @@
 package com.eleks.auctioneer.controller;
 
-
 import com.eleks.auctioneer.DTO.LotDTO;
 import com.eleks.auctioneer.service.LotService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +17,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -35,10 +35,12 @@ public class LotController {
     @PostMapping("/add")
     public ResponseEntity<String> uploadLot(@RequestParam ("model") String model,
                                             @RequestParam("file") MultipartFile file,
-                                            @RequestParam("previewImage") MultipartFile previewImage) throws IOException {
+                                            @RequestParam("previewImage") MultipartFile previewImage,
+                                            Principal principal) throws IOException {
 
+        String currentUserName = principal.getName();
         var lotDTO = objectMapper.readValue(model, LotDTO.class);
-        return lotService.uploadLot(lotDTO, file, previewImage);
+        return lotService.uploadLot(lotDTO, file, previewImage, currentUserName);
     }
 
     @GetMapping("/active")

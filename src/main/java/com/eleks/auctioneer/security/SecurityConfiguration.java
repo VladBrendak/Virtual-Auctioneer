@@ -24,11 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    @RequestMapping(value = "/username", method = RequestMethod.GET)
-    @ResponseBody
-    public String currentUserName(Authentication authentication) {
-        return authentication.getName();
-    }
+//    @RequestMapping(value = "/username", method = RequestMethod.GET)
+//    @ResponseBody
+//    public String currentUserName(Authentication authentication) {
+//        return authentication.getName();
+//    }
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -39,7 +39,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((authorizeHttpRequests) ->
+                authorizeHttpRequests
+                        .anyRequest()
+                        .authenticated()
+        );
 
         return http.build();
     }
