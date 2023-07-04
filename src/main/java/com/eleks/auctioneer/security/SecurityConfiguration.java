@@ -5,30 +5,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-
-//    @RequestMapping(value = "/username", method = RequestMethod.GET)
-//    @ResponseBody
-//    public String currentUserName(Authentication authentication) {
-//        return authentication.getName();
-//    }
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -40,10 +32,11 @@ public class SecurityConfiguration {
         http
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                 authorizeHttpRequests
-                        .anyRequest()
-                        .authenticated()
+                        .requestMatchers("/users/**").permitAll()
+                        .anyRequest().authenticated()
         );
 
         return http.build();
