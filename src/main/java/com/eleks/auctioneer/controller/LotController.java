@@ -1,7 +1,10 @@
 package com.eleks.auctioneer.controller;
 
+import com.eleks.auctioneer.DTO.AppUserDTO;
 import com.eleks.auctioneer.DTO.LotDTO;
+import com.eleks.auctioneer.entity.AppUser;
 import com.eleks.auctioneer.service.LotService;
+import com.eleks.auctioneer.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,8 @@ public class LotController {
     @Autowired
     private LotService lotService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private ObjectMapper objectMapper;
 
     @PostMapping
@@ -38,9 +43,10 @@ public class LotController {
                                             @RequestParam("previewImage") MultipartFile previewImage,
                                             Principal principal) throws IOException {
 
-        String currentUserName = principal.getName();
+        String currentUserEmail = principal.getName();
+        AppUser appUser = userService.getUserByEmail(currentUserEmail);
         var lotDTO = objectMapper.readValue(model, LotDTO.class);
-        return lotService.uploadLot(lotDTO, file, previewImage, currentUserName);
+        return lotService.uploadLot(lotDTO, file, previewImage, appUser);
     }
 
     @GetMapping("/active")

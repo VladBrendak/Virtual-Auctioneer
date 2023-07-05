@@ -31,5 +31,4 @@ public class AppUserDTO {
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         return user;
     }
-
 }

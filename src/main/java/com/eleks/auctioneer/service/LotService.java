@@ -1,6 +1,8 @@
 package com.eleks.auctioneer.service;
 
+import com.eleks.auctioneer.DTO.AppUserDTO;
 import com.eleks.auctioneer.DTO.LotDTO;
+import com.eleks.auctioneer.entity.AppUser;
 import com.eleks.auctioneer.entity.Lot;
 import com.eleks.auctioneer.repository.LotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +27,14 @@ public class LotService {
     @Autowired
     private LotRepository lotRepository;
 
-    public ResponseEntity<String> uploadLot(LotDTO lotDTO, MultipartFile file, MultipartFile previewImage, String curentUserName) throws IOException {
+    public ResponseEntity<String> uploadLot(LotDTO lotDTO, MultipartFile file, MultipartFile previewImage, AppUser appUser) throws IOException {
         String assetFileName = saveFile(file, filePath);
         String previewImageName = saveFile(previewImage, imagePath);
 
         Lot lot = LotDTO.mapToLot(lotDTO);
         lot.setAsset_file(assetFileName);
         lot.setImage(previewImageName);
-        lot.setAuthor(curentUserName);
+        lot.setUser(appUser);
 
         lotRepository.save(lot);
 

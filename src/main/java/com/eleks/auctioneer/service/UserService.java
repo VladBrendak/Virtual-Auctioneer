@@ -37,4 +37,10 @@ public class UserService implements UserDetailsService {
         }
         return new ResponseEntity<String>("Email already used!!!", HttpStatus.BAD_REQUEST);
     }
+
+    public AppUser getUserByEmail(String email)
+    {
+        Optional<AppUser> optionalUser = userInfoRepository.findByEmail(email);
+        return optionalUser.orElse(new AppUser());
+    }
 }

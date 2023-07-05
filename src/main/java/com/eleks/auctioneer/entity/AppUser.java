@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,6 +27,8 @@ public class AppUser implements UserDetails {
     private String email;
     @Column(name = "user_password")
     private String password;
+    @OneToMany(mappedBy = "user")
+    private List<Lot> lots;
 
     public AppUser(AppUser userInfo) {
         this.username = userInfo.getUsername();
@@ -67,5 +70,15 @@ public class AppUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public static AppUserDTO mapToDTO(AppUser user)
+    {
+        AppUserDTO appUserDTO = new AppUserDTO();
+        appUserDTO.setId(user.getId());
+        appUserDTO.setUsername(user.getUsername());
+        appUserDTO.setEmail(user.getEmail());
+        appUserDTO.setPassword("**********");
+        return appUserDTO;
     }
 }

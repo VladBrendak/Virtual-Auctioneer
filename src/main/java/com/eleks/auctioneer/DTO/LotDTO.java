@@ -22,7 +22,7 @@ public class LotDTO {
     @NotBlank(message = "Name of lot is mandatory")
     @Pattern(regexp = "^[a-zA-Z]+$")
     private String name_of_lot;
-    private String author;
+    private String authorEmail;
     @NotEmpty
     private String category;
     @NotEmpty
@@ -30,12 +30,10 @@ public class LotDTO {
     @NotEmpty
     private Timestamp expiration;
 
-
     public static Lot mapToLot(LotDTO lotdto){
         Lot lot = new Lot();
         lot.setId_lot(lotdto.getId_lot());
         lot.setName_of_lot(lotdto.getName_of_lot());
-        lot.setAuthor(lotdto.getAuthor());
         lot.setCategory(lotdto.getCategory());
         lot.setDescription(lotdto.getDescription());
         lot.setExpiration(lotdto.getExpiration());
