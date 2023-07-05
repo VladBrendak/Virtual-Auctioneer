@@ -32,7 +32,7 @@ public class LotController {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<String> uploadLot(@RequestParam ("model") String model,
                                             @RequestParam("file") MultipartFile file,
                                             @RequestParam("previewImage") MultipartFile previewImage,
