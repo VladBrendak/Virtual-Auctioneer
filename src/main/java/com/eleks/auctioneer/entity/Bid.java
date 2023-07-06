@@ -19,18 +19,22 @@ import java.sql.Timestamp;
 public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_bid;
-    private Long id_user;
-    private Long id_lot;
+    @Column(name = "id_bid")
+    private Long bidId;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private AppUser user;
+    @Column(name = "id_lot")
+    private Long lotId;
     private Long bid;
     @CreationTimestamp
     private Timestamp datetime;
 
     public static BidDTO mapToBidDTO(Bid bid){
         BidDTO bidDTO = new BidDTO();
-        bidDTO.setId_bid(bid.getId_bid());
-        bidDTO.setId_user(bid.getId_user());
-        bidDTO.setId_lot(bid.getId_lot());
+        bidDTO.setBidId(bid.getBidId());
+        bidDTO.setId_user(bid.getUser().getId());
+        bidDTO.setLotId(bid.getLotId());
         bidDTO.setBid(bid.getBid());
         bidDTO.setDatetime(bid.getDatetime());
 
