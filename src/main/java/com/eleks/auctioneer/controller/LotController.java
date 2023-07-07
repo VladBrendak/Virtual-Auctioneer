@@ -1,6 +1,5 @@
 package com.eleks.auctioneer.controller;
 
-import com.eleks.auctioneer.DTO.AppUserDTO;
 import com.eleks.auctioneer.DTO.LotDTO;
 import com.eleks.auctioneer.entity.AppUser;
 import com.eleks.auctioneer.service.LotService;
